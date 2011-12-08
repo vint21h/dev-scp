@@ -11,5 +11,5 @@ for lang in $lang_list
 do
     ./manage.py makemessages -l $lang -e html,txt --ignore=${1}-venv/*
 done
-./manage.py compilemessage
+./manage.py compilemessages
 
