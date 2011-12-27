@@ -2,7 +2,7 @@
 
 # dump-data.sh
 
-if [ -n ${1} ];
+if [ ${1} ];
 then
     echo 'Start dumping DB.'
     echo 'Dumping DB structure in SQL...'

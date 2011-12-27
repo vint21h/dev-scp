@@ -2,7 +2,7 @@
 
 # dump-data.sh
 
-if [ -n ${1} ];
+if [ ${1} ];
 then
 
     if [ ! -e ../${1}/tmp/${1}-data.sql ];
