@@ -18,7 +18,7 @@ then
     echo 'Changing DB owner...'
     psql -d ${1} -c "ALTER DATABASE ${1} OWNER TO ${1};"
     echo 'Restoring  DB data...'
-    pg_restore -d ${1} ../${1}/tmp/${1}-data.sql
+    pg_restore -d ${1} ../${1}/tmp/dumps/${1}-data.sql
     echo 'Restoring  DB complete.'
     else
 	echo Usage ${0} %%project_name%%
