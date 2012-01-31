@@ -5,7 +5,7 @@
 if [ ${1} ];
 then
 
-    if [ ! -e ../${1}/tmp/${1}-data.sql ];
+    if [ ! -e ../${1}/tmp/dumps/${1}-data.sql ];
 	then
 	echo File does not exist.
         exit;
