@@ -2,6 +2,7 @@
 
 # -*- coding: utf-8 -*-
 
+# dev-scp
 # check-code.py
 
 try:
@@ -38,11 +39,11 @@ for root, subFolders, files in os.walk(PROJECT_PATH):
 for f in FLST:
     # processing only python sources
     if os.path.splitext(f)[1] == '.py' and PROJECT_NAME + '-venv' not in f and 'migrations' not in f:
-	call('mkdir -p %s' % os.path.join(PROJECT_PATH, 'tmp/reports' ,os.path.dirname(f[f.find(PROJECT_NAME) + len(PROJECT_NAME) + 1:len(f)])), shell=True)  # create directory contains file
-	target_file = f[f.find(PROJECT_NAME):len(f)]
-	print target_file
-	INDEX_BODY += LINK_TEMPLATE % (os.path.splitext(os.path.join(PROJECT_PATH, 'tmp/reports' , target_file[len(PROJECT_NAME) + 1:len(target_file)]))[0] + '.html', target_file)
-	call('pylint -f html %s > %s' % (os.path.join('../', target_file), os.path.splitext(os.path.join(PROJECT_PATH, 'tmp/reports' , target_file[len(PROJECT_NAME) + 1:len(target_file)]))[0] + '.html'), shell=True)
+        call('mkdir -p %s' % os.path.join(PROJECT_PATH, 'tmp/reports' ,os.path.dirname(f[f.find(PROJECT_NAME) + len(PROJECT_NAME) + 1:len(f)])), shell=True)  # create directory contains file
+        target_file = f[f.find(PROJECT_NAME):len(f)]
+        print target_file
+        INDEX_BODY += LINK_TEMPLATE % (os.path.splitext(os.path.join(PROJECT_PATH, 'tmp/reports' , target_file[len(PROJECT_NAME) + 1:len(target_file)]))[0] + '.html', target_file)
+        call('pylint -f html %s > %s' % (os.path.join('../', target_file), os.path.splitext(os.path.join(PROJECT_PATH, 'tmp/reports' , target_file[len(PROJECT_NAME) + 1:len(target_file)]))[0] + '.html'), shell=True)
 
 # saving index page
 INDEX_HTML = open(os.path.join(PROJECT_PATH, 'tmp/reports/index.html'), 'wb')
