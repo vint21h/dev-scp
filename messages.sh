@@ -27,7 +27,7 @@ LANGUAGES=$(echo ${4:-`cat $PROJECT_PATH/meta/languages.txt`} | tr -d "\n" | tr 
 source $PROJECT_PATH/$PROJECT_NAME-venv_$ARCH/bin/activate
 
 # creating and updating .po's files for project and it's app
-if [ $ENVIRONMENT == 'dev' ] || [ $MAKE == 'makemessages' ]
+if [ $MAKE == 'makemessages' ]
 then
 # apps
 for app in $APPS
