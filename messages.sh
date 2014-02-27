@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# django-deploy-helpers
+# dev-scp
 # messages.sh
 
 # WARNING: This and all deploy helpers scripts MUST run from project root directory.
