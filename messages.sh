@@ -4,42 +4,34 @@
 # messages.sh
 
 # WARNING: This script MUST run from project root directory.
-# Require three positioned args:
+# Require two positioned args:
 #     first: project name (default - get from project 'meta/name' or from basename).
 #     second: action (default - makemessages), possible variants: makemessages, compilemessages. Makemessages always run compilemessages.
-#     third: environment (default - dev), possible variants: dev, test.
 # Also support more options:
-#     fourth: apps (default - getting from project 'meta/apps'): list of comma separated project applications names.
-#     five: languages (default - getting from project 'meta/languages'): list of comma separated project languages.
+#     third: apps (default - getting from project 'meta/apps'): list of comma separated project applications names.
+#     fourth: languages (default - getting from project 'meta/languages'): list of comma separated project languages.
+#     five: python path to project settings file.
 # Require project 'meta/name' file.
 
 # getting global variables
 PPATH=$PWD  # project path
-if [ -f $PWD/meta/name ]; then
-    NAME=$(echo ${1:-`cat $PWD/meta/name | tr -d "\n"`})
+if [ -f $PWD/META/name.txt ]; then
+    NAME=$(echo ${1:-`cat $PWD/META/name.txt | tr -d "\n"`})
 else
     NAME=`basename $PWD`
 fi
 MANAGE=$PPATH/manage.py
 ARCH=`arch`
 ACTION=${2:-'makemessages'}
-ENVIRONMENT=${3:-'dev'}
-APPS=$(echo ${4:-`cat $PPATH/meta/apps`} | tr -d "\n" | tr "," "\n")
-LANGUAGES=$(echo ${5:-`cat $PPATH/meta/languages`} | tr -d "\n" | tr "," "\n")
+APPS=$(echo ${3:-`cat $PPATH/META/apps.txt`} | tr -d "\n" | tr "," "\n")
+LANGUAGES=$(echo ${4:-`cat $PPATH/META/languages.txt`} | tr -d "\n" | tr "," "\n")
+SETTINGS=${5:-$NAME.settings.dev}
 
-# enable virtualenv in dev end test env's
-if [ $ENVIRONMENT == 'dev' ]
-then
-    source $PPATH/.env/$ARCH/bin/activate
-fi
+# enable virtualenv
+source $PPATH/.env/$ARCH/bin/activate
 
-if [ $ENVIRONMENT == 'test' ]
-then
-    source $PPATH/.env/bin/activate
-fi
-
-# creating and updating .po's files for project and it's app, don't accept in test env.
-if [ $ACTION == 'makemessages' ] && [ $ENVIRONMENT == 'dev' ]
+# creating and updating .po's files for project and it's apps.
+if [ $ACTION == 'makemessages' ]
 then
 # apps
 for app in $APPS
@@ -49,9 +41,9 @@ do
     for lang in $LANGUAGES
     do
         echo 'Processing: *.html, *.py, *.txt'
-        $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$NAME.settings.$ENVIRONMENT
+        $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$SETTINGS
         echo 'Processing: *.js'
-        $MANAGE makemessages -l $lang -e js -d djangojs --settings=$NAME.settings.$ENVIRONMENT
+        $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS
     done
 done
 
@@ -60,14 +52,14 @@ echo 'Processing project': $NAME
 for lang in $LANGUAGES
 do
     echo 'Processing: *.html, *.py, *.txt'
-    $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$NAME.settings.$ENVIRONMENT --ignore=apps/* --ignore=*env*/* --ignore=static/lib/*
+    $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$SETTINGS --ignore=apps/* --ignore=*env*/* --ignore=static/lib/*
     echo 'Processing: *.js'
-    $MANAGE makemessages -l $lang -e js -d djangojs --settings=$NAME.settings.$ENVIRONMENT --ignore=apps/* --ignore=*env*/* --ignore=static/lib/*
+    $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS --ignore=apps/* --ignore=*env*/* --ignore=static/lib/*
 done
 fi
 
 if [ $ACTION == 'compilemessages' ]
 then
     # complile .po's files
-    $MANAGE compilemessages --settings=$NAME.settings.$ENVIRONMENT
+    $MANAGE compilemessages --settings=$SETTINGS
 fi
