@@ -3,6 +3,7 @@
 # dev-scp
 # messages.sh
 
+# Create, update and compile gettext .po and .mo files for django projects.
 # WARNING: This script MUST run only from project root directory.
 # Require two positioned args:
 #     first: action (default - makemessages), possible variants: makemessages, compilemessages.
