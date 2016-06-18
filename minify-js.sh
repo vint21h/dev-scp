@@ -3,9 +3,9 @@
 # dev-scp
 # minify-js.sh
 
-# WARNING: This script MUST run from project root directory.
+# Minify JavaScript files.
 # Require one arg:
-#     source: path to the file to minify.
+#    source: path to the file to minify.
 
 
 # global variables

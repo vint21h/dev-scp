@@ -6,12 +6,12 @@
 # Create, update and compile gettext .po and .mo files for django projects.
 # WARNING: This script MUST run only from project root directory.
 # Require two positioned args:
-#     first: action (default - makemessages), possible variants: makemessages, compilemessages.
-#     second: project name (default - get from project 'META/name.txt' or from basename).
+#    first: action (default - makemessages), possible variants: makemessages, compilemessages.
+#    second: project name (default - get from project 'META/name.txt' or from basename).
 # Also support more options:
-#     third: apps (default - getting from project 'META/apps.txt'): list of comma separated project applications names.
-#     fourth: languages (default - getting from project 'META/languages.txt'): list of comma separated project languages.
-#     five: python path to project settings module (default - $NAME.settings.dev).
+#    third: apps (default - getting from project 'META/apps.txt'): list of comma separated project applications names.
+#    fourth: languages (default - getting from project 'META/languages.txt'): list of comma separated project languages.
+#    five: python path to project settings module (default - $NAME.settings.dev).
 
 # global variables
 ACTION=${1:-'makemessages'}
