@@ -1,0 +1,19 @@
+# dev-scp
+# .gitignore
+
+.~*
+*.orig
+*.bak
+.DS_Store
+*.save
+.idea/*
+*sublime*
+*geany*
+*komodo*
+tmp/*
+logs/*
+parts
+.project
+.pydevproject
+.settings/*
+*.pid

@@ -8,7 +8,7 @@
 #     source: path to the file to minify.
 
 
-# getting global variables
+# global variables
 SOURCE=${1:-''}
 OUTPUT=$(echo ${SOURCE%.*}).min.js
 

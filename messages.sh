@@ -14,21 +14,20 @@
 #     five: python path to project settings module (default - $NAME.settings.dev).
 
 # global variables
-PPATH=$PWD  # project path
 ACTION=${1:-'makemessages'}
 if [ -f $PWD/META/name.txt ]; then
     NAME=$(echo ${2:-`cat $PWD/META/name.txt | tr -d "\n"`})
 else
     NAME=`basename $PWD`
 fi
-APPS=$(echo ${3:-`cat $PPATH/META/apps.txt`} | tr -d "\n" | tr "," "\n")
-LANGUAGES=$(echo ${4:-`cat $PPATH/META/languages.txt`} | tr -d "\n" | tr "," "\n")
+APPS=$(echo ${3:-`cat $PWD/META/apps.txt`} | tr -d "\n" | tr "," "\n")
+LANGUAGES=$(echo ${4:-`cat $PWD/META/languages.txt`} | tr -d "\n" | tr "," "\n")
 SETTINGS=${5:-$NAME.settings.dev}
-MANAGE=$PPATH/manage.py
+MANAGE=$PWD/manage.py
 ARCH=`arch`
 
 # enable virtualenv
-source $PPATH/.env/$ARCH/bin/activate
+source $PWD/.env/$ARCH/bin/activate
 
 # creating and updating .po's files for project and it's apps.
 if [ $ACTION == 'makemessages' ]
@@ -36,7 +35,7 @@ then
 # apps
 for app in $APPS
 do
-    cd $PPATH/$NAME/apps/$app/
+    cd $PWD/$NAME/apps/$app/
     echo 'Processing application:' $app
     for lang in $LANGUAGES
     do
@@ -47,7 +46,7 @@ do
     done
 done
 
-cd $PPATH/$NAME/
+cd $PWD/$NAME/
 echo 'Processing project': $NAME
 for lang in $LANGUAGES
 do

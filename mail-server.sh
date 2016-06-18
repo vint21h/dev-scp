@@ -4,10 +4,11 @@
 # mail-server.sh
 
 # Debugging mail server.
-# Receive two positioned args: host and port.
+# Require one positioned arg: port.
+# Always run on loopback address.
 
-HOST=${1:-'127.0.0.1'}
+# global variables
 PORT=${1:-'1025'}
 
 # run python SMTP server
-python -m smtpd -n -c DebuggingServer $HOST:$PORT
+python -m smtpd -n -c DebuggingServer 127.0.0.1:$PORT
