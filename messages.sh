@@ -24,10 +24,10 @@ APPS=$(echo ${3:-`cat $PWD/META/apps.txt`} | tr -d "\n" | tr "," "\n")
 LANGUAGES=$(echo ${4:-`cat $PWD/META/languages.txt`} | tr -d "\n" | tr "," "\n")
 SETTINGS=${5:-$NAME.settings.dev}
 MANAGE=$PWD/manage.py
-ARCH=`arch`
+CPWD=$PWD  # current directory path
 
 # enable virtualenv
-source $PWD/.env/$ARCH/bin/activate
+source $PWD/.env/`arch`/bin/activate
 
 # creating and updating .po's files for project and it's apps.
 if [ $ACTION == 'makemessages' ]
@@ -46,7 +46,7 @@ do
     done
 done
 
-cd $PWD/$NAME/
+cd $CPWD/$NAME/
 echo 'Processing project': $NAME
 for lang in $LANGUAGES
 do
