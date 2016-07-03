@@ -35,7 +35,7 @@ then
 # apps
 for app in $APPS
 do
-    cd $PWD/$NAME/apps/$app/
+    cd $CPWD/$NAME/apps/$app/
     echo 'Processing application:' $app
     for lang in $LANGUAGES
     do
