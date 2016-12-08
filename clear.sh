@@ -8,11 +8,11 @@
 #    extensions: list of of comma separated files extensions to delete (default - pyc,pyo,bak,orig,~*,tmp).
 
 # global variables
-EXTENSIONS=$(echo ${1:-'pyc,pyo,bak,orig,~*'} | tr "," "\n")
+EXTENSIONS=$(echo ${1:-"pyc,pyo,bak,orig,~*"} | tr "," "\n")
 
 
 for extension in $EXTENSIONS
 do
-    echo 'Removing *.'$extension' ...'
-    find -iname '*.'$extension -print0 | xargs -0 rm -rf
+    echo "Removing *."$extension" ..."
+    find -iname "*."$extension -print0 | xargs -0 rm -rf
 done
