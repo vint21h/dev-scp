@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # dev-scp
 # messages.sh
@@ -30,7 +30,7 @@ CPWD=$PWD  # current directory path
 source $PWD/.env/`arch`/bin/activate
 
 # creating and updating .po's files for project and it's apps.
-if [ $ACTION == 'makemessages' ]
+if [ $ACTION = 'makemessages' ]
 then
 # apps
 for app in $APPS
@@ -57,7 +57,7 @@ do
 done
 fi
 
-if [ $ACTION == 'compilemessages' ]
+if [ $ACTION = 'compilemessages' ]
 then
     # complile .po's files
     $MANAGE compilemessages --settings=$SETTINGS

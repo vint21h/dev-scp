@@ -2,6 +2,13 @@
 # .gitignore
 
 .~*
+.*.swp
+*.pyc
+*.log
+*.pot
+*.pyo
+*.pyd
+*~
 *.orig
 *.bak
 .DS_Store
@@ -10,10 +17,20 @@
 *sublime*
 *geany*
 *komodo*
+.env/*
+build/*
+dist/*
+*.egg-info/*
 tmp/*
 logs/*
 parts
 .project
 .pydevproject
 .settings/*
+media/*
+data/db/*
+static/*
 *.pid
+components/*
+index.html
+docs.zip
