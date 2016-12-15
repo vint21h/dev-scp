@@ -4,7 +4,7 @@
 A dev-scp documentation
 =======================
 
-    *django-xls2po is a set of my bash helpers for django development*
+    *dev-scp is a set of my bash helpers for django development*
 
 .. contents::
 
