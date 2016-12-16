@@ -52,7 +52,7 @@ do
     for lang in $LANGUAGES
     do
         echo "Processing: *.html, *.py, *.txt"
-        $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$SETTINGS
+        $MANAGE makemessages -l $lang -e html,py,txt,email -d django --settings=$SETTINGS
         echo "Processing: *.js"
         $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS
     done
@@ -66,7 +66,7 @@ do
     for lang in $LANGUAGES
     do
         echo "Processing: *.html, *.py, *.txt"
-        $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$SETTINGS
+        $MANAGE makemessages -l $lang -e html,py,txt,email -d django --settings=$SETTINGS
         echo "Processing: *.js"
         $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS
     done
@@ -78,9 +78,9 @@ echo "Processing project": $NAME
 for lang in $LANGUAGES
 do
     echo "Processing: *.html, *.py, *.txt"
-    $MANAGE makemessages -l $lang -e html,py,txt -d django --settings=$SETTINGS --ignore=apps/* --ignore=*env*/* --ignore=static/lib/*
+    $MANAGE makemessages -l $lang -e html,py,txt,email -d django --settings=$SETTINGS --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
     echo "Processing: *.js"
-    $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS --ignore=apps/* --ignore=*env*/* --ignore=static/lib/*
+    $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
 done
 fi
 
