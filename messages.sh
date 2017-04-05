@@ -51,7 +51,7 @@ do
     echo "Processing application:" $app
     for lang in $LANGUAGES
     do
-        echo "Processing: *.html, *.py, *.txt"
+        echo "Processing: *.html, *.py, *.txt, *.email"
         $MANAGE makemessages -l $lang -e html,py,txt,email -d django --settings=$SETTINGS
         echo "Processing: *.js"
         $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS
@@ -65,7 +65,7 @@ do
     echo "Processing library:" $lib
     for lang in $LANGUAGES
     do
-        echo "Processing: *.html, *.py, *.txt"
+        echo "Processing: *.html, *.py, *.txt, *.email"
         $MANAGE makemessages -l $lang -e html,py,txt,email -d django --settings=$SETTINGS
         echo "Processing: *.js"
         $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS
@@ -77,7 +77,7 @@ cd $PDP/$NAME/
 echo "Processing project": $NAME
 for lang in $LANGUAGES
 do
-    echo "Processing: *.html, *.py, *.txt"
+    echo "Processing: *.html, *.py, *.txt, *.email"
     $MANAGE makemessages -l $lang -e html,py,txt,email -d django --settings=$SETTINGS --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
     echo "Processing: *.js"
     $MANAGE makemessages -l $lang -e js -d djangojs --settings=$SETTINGS --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
