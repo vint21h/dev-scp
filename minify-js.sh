@@ -4,7 +4,7 @@
 # minify-js.sh
 
 # Minify JavaScript files.
-# Require one arg:
+# Required args:
 #    source: path to the file to minify.
 
 
@@ -12,4 +12,9 @@
 SOURCE=${1:-""}
 OUTPUT=$(echo ${SOURCE%.*}).min.js
 
-curl -s  -d compilation_level=SIMPLE_OPTIMIZATIONS -d output_format=text -d output_info=compiled_code --data-urlencode "js_code@${SOURCE}" http://closure-compiler.appspot.com/compile > $OUTPUT
+
+if [ -f ${SOURCE} ]; then
+    curl -s  -d compilation_level=SIMPLE_OPTIMIZATIONS -d output_format=text -d output_info=compiled_code --data-urlencode "js_code@${SOURCE}" http://closure-compiler.appspot.com/compile > ${OUTPUT}
+else
+    exit
+fi
