@@ -9,10 +9,14 @@
 #    action: what to do. Defaults to: makemessages. Possible variants: makemessages, compilemessages.
 #    name: project name. Defaults to: get from project "META/name.txt" or from basename.
 # Args:
-#    apps: list of comma separated project applications names. Defaults to: getting from project "META/apps.txt".
-#    libs: list of comma separated project libraries names. Defaults to: getting from project "META/libs.txt".
-#    languages: list of comma separated project languages. Defaults to: getting from project "META/languages.txt".
+#    apps: list of comma separated project applications names. Defaults to: getting from project "META/messages/apps.txt".
+#    libs: list of comma separated project libraries names. Defaults to: getting from project "META/messages/libs.txt".
+#    languages: list of comma separated project languages. Defaults to: getting from project "META/messages/languages.txt".
 #    settings: python path to project settings module. Defaults to: $NAME.settings.dev.
+#    backend-extensions: list of comma separated files extensions which contains strings marked to translate on backend side. Defaults to: html,py,txt,email,json.
+#    frontend-extensions: list of comma separated files extensions which contains strings marked to translate on frontend side. Defaults to: js.
+#    backend-domain: backend gettext application domain name. Defaults to: django.
+#    frontend-domain: frontend gettext application domain name. Defaults to: djangojs.
 
 
 # global variables
@@ -22,22 +26,34 @@ if [ -f ${PWD}/META/name.txt ]; then
 else
     NAME=`basename $PWD`
 fi
-if [ -f ${PWD}/META/apps.txt ]; then
-    APPS=$(echo ${3:-`cat ${PWD}/META/apps.txt`} | tr -d "\n" | tr "," "\n")
+if [ -f ${PWD}/META/messages/apps.txt ]; then
+    APPS=$(echo ${3:-`cat ${PWD}/META/messages/apps.txt`} | tr -d "\n" | tr "," "\n")
 else
     APPS=()
 fi
-if [ -f ${PWD}/META/libs.txt ]; then
-    LIBS=$(echo ${4:-`cat ${PWD}/META/libs.txt`} | tr -d "\n" | tr "," "\n")
+if [ -f ${PWD}/META/messages/libs.txt ]; then
+    LIBS=$(echo ${4:-`cat ${PWD}/META/messages/libs.txt`} | tr -d "\n" | tr "," "\n")
 else
     LIBS=()
 fi
-if [ -f ${PWD}/META/languages.txt ]; then
-    LANGUAGES=$(echo ${5:-`cat ${PWD}/META/languages.txt`} | tr -d "\n" | tr "," "\n")
+if [ -f ${PWD}/META/messages/languages.txt ]; then
+    LANGUAGES=$(echo ${5:-`cat ${PWD}/META/messages/languages.txt`} | tr -d "\n" | tr "," "\n")
 else
     LANGUAGES=()
 fi
 SETTINGS=${6:-${NAME}.settings.dev}
+if [ -f ${PWD}/META/messages/backend-extensions.txt ]; then
+    BACKEND_EXTENSIONS=$(echo ${7:-`cat ${PWD}/META/messages/backend-extensions.txt`})
+else
+    BACKEND_EXTENSIONS=html,py,txt,email,json
+fi
+if [ -f ${PWD}/META/messages/frontend-extensions.txt ]; then
+    FRONTEND_EXTENSIONS=$(echo ${8:-`cat ${PWD}/META/messages/frontend-extensions.txt`})
+else
+    FRONTEND_EXTENSIONS=js
+fi
+BACKEND_DOMAIN=$(echo ${9:-django})
+FRONTEND_DOMAIN=$(echo ${10:-djangojs})
 MANAGE=${PWD}/manage.py
 PDP=${PWD}  # project directory path
 
@@ -52,10 +68,10 @@ do
     echo "Processing application:" ${app}
     for lang in ${LANGUAGES}
     do
-        echo "Processing: *.html, *.py, *.txt, *.email"
-        ${MANAGE} makemessages -l ${lang} -e html,py,txt,email -d django --settings=${SETTINGS}
-        echo "Processing: *.js"
-        ${MANAGE} makemessages -l ${lang} -e js -d djangojs --settings=${SETTINGS}
+        echo "Processing backend files..."
+        ${MANAGE} makemessages -l ${lang} -e ${BACKEND_EXTENSIONS} -d ${BACKEND_DOMAIN} --settings=${SETTINGS}
+        echo "Processing frontend files..."
+        ${MANAGE} makemessages -l ${lang} -e ${FRONTEND_EXTENSIONS} -d ${FRONTEND_DOMAIN} --settings=${SETTINGS}
     done
 done
 
@@ -66,10 +82,10 @@ do
     echo "Processing library:" ${lib}
     for lang in ${LANGUAGES}
     do
-        echo "Processing: *.html, *.py, *.txt, *.email"
-        ${MANAGE} makemessages -l ${lang} -e html,py,txt,email -d django --settings=${SETTINGS}
-        echo "Processing: *.js"
-        ${MANAGE} makemessages -l ${lang} -e js -d djangojs --settings=${SETTINGS}
+        echo "Processing backend files..."
+        ${MANAGE} makemessages -l ${lang} -e ${BACKEND_EXTENSIONS} -d ${BACKEND_DOMAIN} --settings=${SETTINGS}
+        echo "Processing frontend files..."
+        ${MANAGE} makemessages -l ${lang} -e ${FRONTEND_EXTENSIONS} -d ${FRONTEND_DOMAIN} --settings=${SETTINGS}
     done
 done
 
@@ -78,10 +94,10 @@ cd ${PDP}/${NAME}/
 echo "Processing project": ${NAME}
 for lang in ${LANGUAGES}
 do
-    echo "Processing: *.html, *.py, *.txt, *.email"
-    ${MANAGE} makemessages -l ${lang} -e html,py,txt,email -d django --settings=${SETTINGS} --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
-    echo "Processing: *.js"
-    ${MANAGE} makemessages -l ${lang} -e js -d djangojs --settings=${SETTINGS} --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
+    echo "Processing backend files..."
+    ${MANAGE} makemessages -l ${lang} -e ${BACKEND_EXTENSIONS} -d ${BACKEND_DOMAIN} --settings=${SETTINGS} --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
+    echo "Processing frontend files..."
+    ${MANAGE} makemessages -l ${lang} -e ${FRONTEND_EXTENSIONS} -d ${FRONTEND_DOMAIN} --settings=${SETTINGS} --ignore=apps/* --ignore=lib/* --ignore=*env*/* --ignore=static/lib/*
 done
 fi
 

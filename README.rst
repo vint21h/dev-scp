@@ -12,9 +12,9 @@ Usage
 -----
 For complete usage help see scripts files headers.
 
-clear.sh
+clean.sh
 --------
-Recursive delete useless files.
+Recursive delete useless files and directories.
 
 mail-server.sh
 --------------
